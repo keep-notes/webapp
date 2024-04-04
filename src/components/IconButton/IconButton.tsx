@@ -1,0 +1,16 @@
+'use client';
+
+import cn from 'classnames';
+import { IconButtonProps } from './IconButton.types';
+
+export default function IconButton({ className, ...props }: IconButtonProps) {
+  return (
+    <button
+      className={cn(
+        'inline-grid place-items-center rounded-full p-3 hover:bg-accent',
+        className
+      )}
+      {...props}
+    />
+  );
+}
