@@ -2,12 +2,11 @@ import { MdSearch } from 'react-icons/md';
 
 import IconButton from './IconButton';
 
-export const Default = {
-  render: () => (
-    <IconButton title="Search">
-      <MdSearch size={48} />
-    </IconButton>
-  ),
+export const Primary = {
+  args: {
+    title: 'Search',
+    children: <MdSearch size={48} />,
+  },
 };
 
 export default {

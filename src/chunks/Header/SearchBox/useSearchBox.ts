@@ -7,7 +7,7 @@ export default function useSearchBox() {
     container: useRef<HTMLDivElement>(null),
     input: useRef<HTMLInputElement>(null),
   };
-  const { data: value } = useGetSearch();
+  const value = useGetSearch();
   const setValue = useSetSearch();
 
   const blur = () => setFocused(false);
@@ -33,12 +33,9 @@ export default function useSearchBox() {
   };
 
   return {
-    blur,
-    clearValue,
-    focus,
+    events: { onBlur, onChangeValue },
+    actions: { blur, clearValue, focus },
     focused,
-    onBlur,
-    onChangeValue,
     refs,
     value,
   };

@@ -2,7 +2,7 @@ import './globals.css';
 import type { Metadata } from 'next';
 import { Nunito_Sans } from 'next/font/google';
 import { PropsWithChildren } from 'react';
-import ReactQueryClientProvider from '@/providers/ReactQueryClientProvider';
+import Providers from '@/providers/Providers';
 
 const font = Nunito_Sans({ subsets: ['latin'] });
 
@@ -14,7 +14,7 @@ export default function RootLayout(props: Readonly<PropsWithChildren>) {
   return (
     <html lang="en">
       <body className={font.className}>
-        <ReactQueryClientProvider>{props.children}</ReactQueryClientProvider>
+        <Providers>{props.children}</Providers>
       </body>
     </html>
   );

@@ -1,16 +1,23 @@
-import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { gql, useQuery } from '@apollo/client';
+import { cache } from '@/apollo/cache';
 
-const searchKey = 'search';
+const GetSearchQuery = gql`
+  query GetSearch {
+    search @client
+  }
+`;
 
 function useGetSearch() {
-  return useQuery<string>({
-    queryKey: [searchKey],
-  });
+  const res = useQuery(GetSearchQuery);
+  return res.data?.search ?? '';
 }
 
 function useSetSearch() {
-  const queryClient = useQueryClient();
-  return (newVal: string) => queryClient.setQueryData([searchKey], newVal);
+  return (search: string) =>
+    cache.writeQuery({
+      query: GetSearchQuery,
+      data: { search },
+    });
 }
 
 export { useGetSearch, useSetSearch };

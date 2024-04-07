@@ -2,10 +2,10 @@ import { StoryObj } from '@storybook/react';
 import SideNavLink from './SideNavLink';
 import pages from '@/chunks/SideNav/pages';
 
-export const Default: StoryObj<typeof SideNavLink> = {
-  render: (args) => (
-    <SideNavLink page={pages[0]} isSelected={args.isSelected} />
-  ),
+export const Primary: StoryObj<typeof SideNavLink> = {
+  args: {
+    page: pages[0],
+  },
 };
 
 export default {
@@ -14,10 +14,4 @@ export default {
     layout: 'fullscreen',
   },
   tags: ['autodocs'],
-  argTypes: {
-    isSelected: {
-      options: [true, false],
-      control: { type: 'radio' },
-    },
-  },
 };

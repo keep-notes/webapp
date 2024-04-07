@@ -1,25 +1,33 @@
-import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { gql, useQuery } from '@apollo/client';
+import { cache } from '@/apollo/cache';
 
-const key = 'menu-extended';
+const GetMenuExtendedQuery = gql`
+  query GetMenuExtended {
+    menuExtended @client
+  }
+`;
 
 function useIsMenuExtended() {
-  const query = useQuery<boolean>({
-    queryKey: [key],
-  });
-
-  return Boolean(query.data);
+  const res = useQuery(GetMenuExtendedQuery);
+  return Boolean(res.data?.menuExtended);
 }
 
 function useExtendMenu() {
-  const queryClient = useQueryClient();
-  return (val: boolean) => queryClient.setQueryData([key], val);
+  return (menuExtended: boolean) => {
+    cache.writeQuery({
+      query: GetMenuExtendedQuery,
+      data: { menuExtended },
+    });
+  };
 }
 
 function useToggleMenu() {
-  const queryClient = useQueryClient();
   const isExtended = useIsMenuExtended();
-
-  return () => queryClient.setQueryData([key], !isExtended);
+  return () =>
+    cache.writeQuery({
+      query: GetMenuExtendedQuery,
+      data: { menuExtended: !isExtended },
+    });
 }
 
 export { useExtendMenu, useIsMenuExtended, useToggleMenu };

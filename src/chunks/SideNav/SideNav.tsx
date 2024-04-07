@@ -12,7 +12,7 @@ export default function SideNav() {
     <nav
       className={cn({
         'flex h-full w-20 flex-col': true,
-        'absolute left-0 !w-64 shadow-2xl shadow-black': h.isExtended,
+        'absolute left-0 top-0 !w-64 shadow-2xl shadow-black': h.isExtended,
       })}
       onMouseOver={h.events.onEnter}
       onMouseLeave={h.events.onLeave}

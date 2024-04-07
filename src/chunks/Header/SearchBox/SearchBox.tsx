@@ -11,7 +11,7 @@ export default function SearchBox(props: SearchBoxProps) {
 
   if (props.isCompact && !h.focused) {
     return (
-      <IconButton title="Search" onClick={h.focus}>
+      <IconButton title="Search" onClick={h.actions.focus}>
         <MdSearch size={24} />
       </IconButton>
     );
@@ -25,17 +25,21 @@ export default function SearchBox(props: SearchBoxProps) {
         'focus-within:bg-white focus-within:text-black',
         { 'absolute left-4 top-4': h.focused && props.isCompact }
       )}
-      onFocus={h.focus}
-      onBlur={h.onBlur}
+      onFocus={h.actions.focus}
+      onBlur={h.events.onBlur}
       tabIndex={0}
     >
       <div>
         {props.isCompact ? (
-          <IconButton title="Close search" className="p-2" onClick={h.blur}>
+          <IconButton
+            title="Close search"
+            className="p-2"
+            onClick={h.actions.blur}
+          >
             <MdArrowBack size={24} />
           </IconButton>
         ) : (
-          <IconButton title="Search" className="p-2" onClick={h.focus}>
+          <IconButton title="Search" className="p-2" onClick={h.actions.focus}>
             <MdSearch size={24} />
           </IconButton>
         )}
@@ -43,7 +47,7 @@ export default function SearchBox(props: SearchBoxProps) {
       <input
         ref={h.refs.input}
         value={h.value ?? ''}
-        onChange={h.onChangeValue}
+        onChange={h.events.onChangeValue}
         className="bg-transparent py-3 focus:outline-none"
         placeholder="Search"
         autoFocus
@@ -53,7 +57,7 @@ export default function SearchBox(props: SearchBoxProps) {
           <IconButton
             title="Clear search"
             className="p-2"
-            onClick={h.clearValue}
+            onClick={h.actions.clearValue}
           >
             <MdClose size={24} />
           </IconButton>

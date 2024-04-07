@@ -1,0 +1,6 @@
+directive @client on FIELD
+
+type Query {
+    menuExtended: Boolean
+    search: String
+}

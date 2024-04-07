@@ -1,14 +1,14 @@
-import { StoryObj } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
 import SearchBox from './SearchBox';
 
 type Story = StoryObj<typeof SearchBox>;
 
-export const Full: Story = {
-  render: (args) => <SearchBox isCompact={args.isCompact} />,
-};
+export const Primary = {};
 
 export const Compact: Story = {
-  render: () => <SearchBox isCompact />,
+  args: {
+    isCompact: true,
+  },
 };
 
 export default {
@@ -17,10 +17,11 @@ export default {
     layout: 'centered',
   },
   tags: ['autodocs'],
-  argTypes: {
-    isCompact: {
-      options: [true, false],
-      control: { type: 'radio' },
-    },
-  },
-};
+  decorators: [
+    (Story) => (
+      <div className="h-32 p-4">
+        <Story />
+      </div>
+    ),
+  ],
+} satisfies Meta<typeof SearchBox>;

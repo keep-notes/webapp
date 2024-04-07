@@ -1,8 +1,6 @@
 import MenuTrigger from './MenuTrigger';
 
-export const Default = {
-  render: () => <MenuTrigger />,
-};
+export const Primary = {};
 
 export default {
   component: MenuTrigger,

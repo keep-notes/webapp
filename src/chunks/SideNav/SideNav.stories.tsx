@@ -1,6 +1,6 @@
 import SideNav from './SideNav';
 
-export const Default = {
+export const Primary = {
   render: () => <SideNav />,
 };
 
