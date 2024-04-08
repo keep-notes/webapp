@@ -11,6 +11,21 @@ const GetAuthQuery = gql`
   }
 `;
 
+const GetAuthMock = {
+  request: {
+    query: GetAuthQuery,
+  },
+  result: {
+    data: {
+      authUser: {
+        _id: 'id',
+        email: 'email@example.com',
+        name: 'John Doe',
+      },
+    },
+  },
+};
+
 const RegisterMutation = gql`
   mutation RegisterMutation($user: RegisterInput!) {
     register(user: $user) {
@@ -43,4 +58,4 @@ function useRegisterUser() {
   return async (user: RegisterInput) => mutation({ variables: { user } });
 }
 
-export { GetAuthQuery, useAuthUser, useLogin, useRegisterUser };
+export { GetAuthMock, useAuthUser, useLogin, useRegisterUser };

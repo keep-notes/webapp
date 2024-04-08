@@ -42,7 +42,7 @@ export default function NoteForm() {
               </IconButton>
             ))}
           </div>
-          <Button>Close</Button>
+          <Button onClick={h.events.close}>Close</Button>
         </footer>
       )}
     </div>
