@@ -1,11 +1,11 @@
-import SideNav from './SideNav';
+import TextArea from './TextArea';
 
 export const Primary = {};
 
 export default {
-  component: SideNav,
+  component: TextArea,
   parameters: {
-    layout: 'fullscreen',
+    layout: 'centered',
   },
   tags: ['autodocs'],
 };

@@ -12884,6 +12884,7 @@ __metadata:
     "@graphql-codegen/client-preset": "npm:^4.2.5"
     "@graphql-typed-document-node/core": "npm:^3.2.0"
     "@hookform/resolvers": "npm:^3.3.4"
+    "@radix-ui/react-slot": "npm:^1.0.2"
     "@storybook/addon-essentials": "npm:^8.0.6"
     "@storybook/addon-interactions": "npm:^8.0.6"
     "@storybook/addon-links": "npm:^8.0.6"

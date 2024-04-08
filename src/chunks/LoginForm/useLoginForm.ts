@@ -32,7 +32,7 @@ export default function useLoginForm() {
       setLoading(true);
       const resp = await login(input);
       await setLocalItem('authToken', resp.data.login.token);
-      await router.push('/');
+      router.push('/');
     } catch (error) {
       if (error instanceof ApolloError) {
         enqueueSnackbar(error.message);

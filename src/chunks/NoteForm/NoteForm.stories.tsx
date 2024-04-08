@@ -1,9 +1,9 @@
-import SideNav from './SideNav';
+import NoteForm from './NoteForm';
 
 export const Primary = {};
 
 export default {
-  component: SideNav,
+  component: NoteForm,
   parameters: {
     layout: 'fullscreen',
   },

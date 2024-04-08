@@ -13,7 +13,7 @@ export default function useHeaderAuth() {
   const toggleMenu = () => setMenuVisible(!menuVisible);
 
   const logOut = async () => {
-    await router.push('/login');
+    router.push('/login');
     await client.resetStore();
     await clearLocalItems();
   };

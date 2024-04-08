@@ -38,7 +38,7 @@ export default function useRegisterForm() {
       try {
         const resp = await registerUser({ email, name, password });
         await setLocalItem('authToken', resp.data.register.token);
-        await router.push('/');
+        router.push('/');
       } catch (error) {
         if (error instanceof ApolloError) {
           enqueueSnackbar(error.message);

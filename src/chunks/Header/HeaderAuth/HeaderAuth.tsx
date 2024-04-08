@@ -18,15 +18,15 @@ export default function HeaderAuth() {
       )}
       <button
         onClick={h.toggleMenu}
-        className="mx-2 grid size-10 place-items-center rounded-full border-2 border-blue-400 bg-blue-50 text-2xl text-blue-400"
+        className="mx-2 grid size-9 place-items-center rounded-full bg-violet-800 font-bold"
       >
         {h.authUser.name[0]}
       </button>
       <div
         role="menu"
         className={cn(
-          'absolute right-0 z-20 my-2 w-64 rounded-lg bg-neutral-700 shadow-lg transition-opacity',
-          h.menuVisible || 'opacity-0'
+          'absolute right-0 z-20 my-2 w-64 overflow-hidden rounded-lg bg-neutral-700 shadow-lg transition-opacity',
+          h.menuVisible ? 'h-max' : 'h-0 opacity-0'
         )}
       >
         <div className="border-b border-light p-4">

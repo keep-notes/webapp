@@ -11,7 +11,7 @@ export default function SideNav() {
   return (
     <nav
       className={cn({
-        'flex h-full w-20 flex-col': true,
+        'flex h-full w-20 flex-col bg-dark': true,
         'absolute left-0 top-0 !w-64 shadow-2xl shadow-black': h.isExtended,
       })}
       onMouseOver={h.events.onEnter}

@@ -15,6 +15,7 @@ import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/
 const documents = {
     "\n  query AuthQuery {\n    authUser {\n      _id\n      name\n      email\n    }\n  }\n": types.AuthQueryDocument,
     "\n  mutation RegisterMutation($user: RegisterInput!) {\n    register(user: $user) {\n      token\n    }\n  }\n": types.RegisterMutationDocument,
+    "\n  mutation LoginMutation($credentials: LoginInput!) {\n    login(credentials: $credentials) {\n      token\n    }\n  }\n": types.LoginMutationDocument,
     "\n  query GetMenuExtended {\n    menuExtended @client\n  }\n": types.GetMenuExtendedDocument,
     "\n  query GetSearch {\n    search @client\n  }\n": types.GetSearchDocument,
 };
@@ -41,6 +42,10 @@ export function gql(source: "\n  query AuthQuery {\n    authUser {\n      _id\n 
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function gql(source: "\n  mutation RegisterMutation($user: RegisterInput!) {\n    register(user: $user) {\n      token\n    }\n  }\n"): (typeof documents)["\n  mutation RegisterMutation($user: RegisterInput!) {\n    register(user: $user) {\n      token\n    }\n  }\n"];
+/**
+ * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function gql(source: "\n  mutation LoginMutation($credentials: LoginInput!) {\n    login(credentials: $credentials) {\n      token\n    }\n  }\n"): (typeof documents)["\n  mutation LoginMutation($credentials: LoginInput!) {\n    login(credentials: $credentials) {\n      token\n    }\n  }\n"];
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
