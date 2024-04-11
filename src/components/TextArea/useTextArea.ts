@@ -15,6 +15,7 @@ export default function useTextArea() {
       }
     };
 
+    handleInput();
     elem.addEventListener('input', handleInput);
 
     return () => {

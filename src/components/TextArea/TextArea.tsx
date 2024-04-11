@@ -5,7 +5,7 @@ import useTextArea from './useTextArea';
 import TextBox from '@/components/TextBox/TextBox';
 import { TextBoxProps } from '@/components/TextBox/TextBox.types';
 
-type TextAreaProps = TextBoxProps & ComponentProps<'textarea'>;
+type TextAreaProps = ComponentProps<'textarea'> & TextBoxProps;
 
 const TextArea = forwardRef<HTMLTextAreaElement, TextAreaProps>(
   (props, ref) => {
@@ -13,7 +13,7 @@ const TextArea = forwardRef<HTMLTextAreaElement, TextAreaProps>(
 
     return (
       <TextBox asChild {...props}>
-        <textarea id={h.id} ref={ref} />
+        <textarea id={h.id} ref={ref} className="resize-none" />
       </TextBox>
     );
   }

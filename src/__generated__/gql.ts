@@ -16,7 +16,12 @@ const documents = {
     "\n  query AuthQuery {\n    authUser {\n      _id\n      name\n      email\n    }\n  }\n": types.AuthQueryDocument,
     "\n  mutation RegisterMutation($user: RegisterInput!) {\n    register(user: $user) {\n      token\n    }\n  }\n": types.RegisterMutationDocument,
     "\n  mutation LoginMutation($credentials: LoginInput!) {\n    login(credentials: $credentials) {\n      token\n    }\n  }\n": types.LoginMutationDocument,
+    "\n  query DraftQuery {\n    authUser {\n      draft {\n        content\n        title\n      }\n    }\n  }\n": types.DraftQueryDocument,
+    "\n  query DraftHistory {\n    draftHistory @client {\n      title\n      content\n    }\n  }\n": types.DraftHistoryDocument,
+    "\n  mutation DraftMutation($draft: UpdateDraftInput!) {\n    updateDraft(draft: $draft) {\n      _id\n      title\n      content\n    }\n  }\n": types.DraftMutationDocument,
     "\n  query GetMenuExtended {\n    menuExtended @client\n  }\n": types.GetMenuExtendedDocument,
+    "\n  mutation AddNoteMutation($note: AddNoteInput!) {\n    addNote(note: $note) {\n      title\n      content\n    }\n  }\n": types.AddNoteMutationDocument,
+    "\n  query AllNotesQuery {\n    authUser {\n      notes {\n        _id\n        content\n        title\n      }\n    }\n  }\n": types.AllNotesQueryDocument,
     "\n  query GetSearch {\n    search @client\n  }\n": types.GetSearchDocument,
 };
 
@@ -49,7 +54,27 @@ export function gql(source: "\n  mutation LoginMutation($credentials: LoginInput
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
+export function gql(source: "\n  query DraftQuery {\n    authUser {\n      draft {\n        content\n        title\n      }\n    }\n  }\n"): (typeof documents)["\n  query DraftQuery {\n    authUser {\n      draft {\n        content\n        title\n      }\n    }\n  }\n"];
+/**
+ * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function gql(source: "\n  query DraftHistory {\n    draftHistory @client {\n      title\n      content\n    }\n  }\n"): (typeof documents)["\n  query DraftHistory {\n    draftHistory @client {\n      title\n      content\n    }\n  }\n"];
+/**
+ * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function gql(source: "\n  mutation DraftMutation($draft: UpdateDraftInput!) {\n    updateDraft(draft: $draft) {\n      _id\n      title\n      content\n    }\n  }\n"): (typeof documents)["\n  mutation DraftMutation($draft: UpdateDraftInput!) {\n    updateDraft(draft: $draft) {\n      _id\n      title\n      content\n    }\n  }\n"];
+/**
+ * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
 export function gql(source: "\n  query GetMenuExtended {\n    menuExtended @client\n  }\n"): (typeof documents)["\n  query GetMenuExtended {\n    menuExtended @client\n  }\n"];
+/**
+ * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function gql(source: "\n  mutation AddNoteMutation($note: AddNoteInput!) {\n    addNote(note: $note) {\n      title\n      content\n    }\n  }\n"): (typeof documents)["\n  mutation AddNoteMutation($note: AddNoteInput!) {\n    addNote(note: $note) {\n      title\n      content\n    }\n  }\n"];
+/**
+ * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function gql(source: "\n  query AllNotesQuery {\n    authUser {\n      notes {\n        _id\n        content\n        title\n      }\n    }\n  }\n"): (typeof documents)["\n  query AllNotesQuery {\n    authUser {\n      notes {\n        _id\n        content\n        title\n      }\n    }\n  }\n"];
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

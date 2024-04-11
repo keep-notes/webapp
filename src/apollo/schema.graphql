@@ -1,6 +1,83 @@
 directive @client on FIELD
 
 type Query {
+    authUser: User
     menuExtended: Boolean
     search: String
+}
+
+type Mutation {
+    register(user: RegisterInput!): Auth!
+    login(credentials: LoginInput!): Auth!
+    addNote(note: AddNoteInput!): Note!
+    editNote(noteId: String!, edit: EditNoteInput!): Note!
+    deleteNote(noteId: String!): [Note!]!
+    updateDraft(draft: UpdateDraftInput!): Draft!
+}
+
+scalar Date
+
+type User {
+    _id: ID!
+    name: String!
+    email: String!
+    password: String!
+    lastLogin: Date
+    createdAt: Date!
+    updatedAt: Date!
+    notes: [Note!]!
+    draft: Draft
+}
+
+type Auth {
+    token: String!
+    user: User!
+}
+
+type Note {
+    _id: ID!
+    title: String!
+    content: String!
+    userId: String!
+    user: User!
+    createdAt: Date!
+    updatedAt: Date!
+}
+
+type Draft {
+    _id: ID!
+    title: String!
+    content: String!
+    userId: String!
+    user: User!
+    createdAt: Date!
+    updatedAt: Date!
+}
+
+input RegisterInput {
+    name: String!
+    email: String!
+    password: String!
+}
+
+input LoginInput {
+    email: String!
+    password: String!
+}
+
+input AddNoteInput {
+    title: String!
+    content: String!
+    userId: String!
+}
+
+input EditNoteInput {
+    title: String
+    content: String
+}
+
+input UpdateDraftInput {
+    title: String!
+    content: String!
+    userId: String!
 }

@@ -15,9 +15,11 @@ const TextBox = forwardRef<HTMLInputElement, TextBoxProps>(
         type={type}
         className={cn(
           'flex h-10 w-full items-center bg-transparent px-3',
-          variant === 'bordered' && 'rounded-md border border-light py-2',
-          variant === 'ghost' &&
-            'placeholder:font-bold placeholder:text-neutral-300 focus:outline-none',
+          {
+            'rounded-md border border-light py-2': variant === 'bordered',
+            'placeholder:font-bold placeholder:text-neutral-400 focus:outline-none':
+              variant === 'ghost',
+          },
           className
         )}
         ref={ref}

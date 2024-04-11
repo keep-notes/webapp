@@ -1,5 +1,6 @@
 import Header from '@/chunks/Header/Header';
 import NoteForm from '@/chunks/NoteForm/NoteForm';
+import NoteList from '@/chunks/NoteList/NoteList';
 import SideNav from '@/chunks/SideNav/SideNav';
 
 export default function Home() {
@@ -10,6 +11,7 @@ export default function Home() {
         <SideNav />
         <div className="flex-1">
           <NoteForm />
+          <NoteList />
         </div>
       </div>
     </div>

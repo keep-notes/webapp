@@ -3814,24 +3814,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tanstack/query-core@npm:5.28.13":
-  version: 5.28.13
-  resolution: "@tanstack/query-core@npm:5.28.13"
-  checksum: 10c0/4eb2c162a05948caf556d84ee65a7d640786adcfdc3fbefaf3e010ab462bdfb3ea7bdb200829ca33ccc60699a9a6d9414e7d6a3ea92b819a5de25337ea07b0d7
-  languageName: node
-  linkType: hard
-
-"@tanstack/react-query@npm:^5.28.14":
-  version: 5.28.14
-  resolution: "@tanstack/react-query@npm:5.28.14"
-  dependencies:
-    "@tanstack/query-core": "npm:5.28.13"
-  peerDependencies:
-    react: ^18.0.0
-  checksum: 10c0/34d269be1653d1ac313603c145540e15c5bd94da012b0fafda2f2d90bbc0712a213e41d4335d5b2f2fd54ac2f238dd0582aeb617b71edba5046235ec6bc69939
-  languageName: node
-  linkType: hard
-
 "@testing-library/dom@npm:^9.3.4":
   version: 9.3.4
   resolution: "@testing-library/dom@npm:9.3.4"
@@ -9178,6 +9160,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"immer@npm:^10.0.4":
+  version: 10.0.4
+  resolution: "immer@npm:10.0.4"
+  checksum: 10c0/da9da59d6e71cf3f2875024b5cfb58874baef3eefec6425483e53163e31ed0ab24bae85cd2829cb7812acb9723075eedb5946654f8bd47ecf38663388e04d3bd
+  languageName: node
+  linkType: hard
+
 "immutable@npm:~3.7.6":
   version: 3.7.6
   resolution: "immutable@npm:3.7.6"
@@ -12895,7 +12884,6 @@ __metadata:
     "@storybook/react": "npm:^8.0.6"
     "@storybook/test": "npm:^8.0.6"
     "@storybook/theming": "npm:^8.0.6"
-    "@tanstack/react-query": "npm:^5.28.14"
     "@types/node": "npm:^20"
     "@types/react": "npm:^18"
     "@types/react-dom": "npm:^18"
@@ -12907,6 +12895,7 @@ __metadata:
     eslint-plugin-storybook: "npm:^0.8.0"
     graphql: "npm:^16.8.1"
     idb-keyval: "npm:^6.2.1"
+    immer: "npm:^10.0.4"
     next: "npm:14.1.4"
     notistack: "npm:^3.0.1"
     postcss: "npm:^8"
@@ -12920,6 +12909,7 @@ __metadata:
     storybook-addon-apollo-client: "npm:^6.0.0"
     tailwindcss: "npm:3.4.3"
     typescript: "npm:^5.4.4"
+    use-immer: "npm:^0.9.0"
     yup: "npm:^1.4.0"
   languageName: unknown
   linkType: soft
@@ -14683,6 +14673,16 @@ __metadata:
   version: 8.0.2
   resolution: "urlpattern-polyfill@npm:8.0.2"
   checksum: 10c0/5388bbe8459dbd8861ee7cb97904be915dd863a9789c2191c528056f16adad7836ec22762ed002fed44e8995d0f98bdfb75a606466b77233e70d0f61b969aaf9
+  languageName: node
+  linkType: hard
+
+"use-immer@npm:^0.9.0":
+  version: 0.9.0
+  resolution: "use-immer@npm:0.9.0"
+  peerDependencies:
+    immer: ">=2.0.0"
+    react: ^16.8.0 || ^17.0.1 || ^18.0.0
+  checksum: 10c0/f8309eec0fe493a4a79588cd9c7ed4b54e5d8fe96883543296aa3613c8b91f37c6055129c3578db0f598ebff22e020adf324cd12082a8d0d3dc81c3953dd61e8
   languageName: node
   linkType: hard
 

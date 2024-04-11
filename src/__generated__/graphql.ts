@@ -29,6 +29,17 @@ export type Auth = {
   user: User;
 };
 
+export type Draft = {
+  __typename?: 'Draft';
+  _id: Scalars['ID']['output'];
+  content: Scalars['String']['output'];
+  createdAt: Scalars['Date']['output'];
+  title: Scalars['String']['output'];
+  updatedAt: Scalars['Date']['output'];
+  user: User;
+  userId: Scalars['String']['output'];
+};
+
 export type EditNoteInput = {
   content?: InputMaybe<Scalars['String']['input']>;
   title?: InputMaybe<Scalars['String']['input']>;
@@ -46,6 +57,7 @@ export type Mutation = {
   editNote: Note;
   login: Auth;
   register: Auth;
+  updateDraft: Draft;
 };
 
 
@@ -74,11 +86,18 @@ export type MutationRegisterArgs = {
   user: RegisterInput;
 };
 
+
+export type MutationUpdateDraftArgs = {
+  draft: UpdateDraftInput;
+};
+
 export type Note = {
   __typename?: 'Note';
   _id: Scalars['ID']['output'];
   content: Scalars['String']['output'];
+  createdAt: Scalars['Date']['output'];
   title: Scalars['String']['output'];
+  updatedAt: Scalars['Date']['output'];
   user: User;
   userId: Scalars['String']['output'];
 };
@@ -86,6 +105,7 @@ export type Note = {
 export type Query = {
   __typename?: 'Query';
   authUser?: Maybe<User>;
+  draftHistory?: Maybe<Array<Draft>>;
   menuExtended?: Maybe<Scalars['Boolean']['output']>;
   search?: Maybe<Scalars['String']['output']>;
 };
@@ -96,10 +116,17 @@ export type RegisterInput = {
   password: Scalars['String']['input'];
 };
 
+export type UpdateDraftInput = {
+  content: Scalars['String']['input'];
+  title: Scalars['String']['input'];
+  userId: Scalars['String']['input'];
+};
+
 export type User = {
   __typename?: 'User';
   _id: Scalars['ID']['output'];
   createdAt: Scalars['Date']['output'];
+  draft?: Maybe<Draft>;
   email: Scalars['String']['output'];
   lastLogin?: Maybe<Scalars['Date']['output']>;
   name: Scalars['String']['output'];
@@ -127,10 +154,39 @@ export type LoginMutationMutationVariables = Exact<{
 
 export type LoginMutationMutation = { __typename?: 'Mutation', login: { __typename?: 'Auth', token: string } };
 
+export type DraftQueryQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type DraftQueryQuery = { __typename?: 'Query', authUser?: { __typename?: 'User', draft?: { __typename?: 'Draft', content: string, title: string } | null } | null };
+
+export type DraftHistoryQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type DraftHistoryQuery = { __typename?: 'Query', draftHistory?: Array<{ __typename?: 'Draft', title: string, content: string }> | null };
+
+export type DraftMutationMutationVariables = Exact<{
+  draft: UpdateDraftInput;
+}>;
+
+
+export type DraftMutationMutation = { __typename?: 'Mutation', updateDraft: { __typename?: 'Draft', _id: string, title: string, content: string } };
+
 export type GetMenuExtendedQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type GetMenuExtendedQuery = { __typename?: 'Query', menuExtended?: boolean | null };
+
+export type AddNoteMutationMutationVariables = Exact<{
+  note: AddNoteInput;
+}>;
+
+
+export type AddNoteMutationMutation = { __typename?: 'Mutation', addNote: { __typename?: 'Note', title: string, content: string } };
+
+export type AllNotesQueryQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type AllNotesQueryQuery = { __typename?: 'Query', authUser?: { __typename?: 'User', notes: Array<{ __typename?: 'Note', _id: string, content: string, title: string }> } | null };
 
 export type GetSearchQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -141,5 +197,10 @@ export type GetSearchQuery = { __typename?: 'Query', search?: string | null };
 export const AuthQueryDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"AuthQuery"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"authUser"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"_id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"email"}}]}}]}}]} as unknown as DocumentNode<AuthQueryQuery, AuthQueryQueryVariables>;
 export const RegisterMutationDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"RegisterMutation"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"user"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"RegisterInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"register"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"user"},"value":{"kind":"Variable","name":{"kind":"Name","value":"user"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"token"}}]}}]}}]} as unknown as DocumentNode<RegisterMutationMutation, RegisterMutationMutationVariables>;
 export const LoginMutationDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"LoginMutation"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"credentials"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"LoginInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"login"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"credentials"},"value":{"kind":"Variable","name":{"kind":"Name","value":"credentials"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"token"}}]}}]}}]} as unknown as DocumentNode<LoginMutationMutation, LoginMutationMutationVariables>;
+export const DraftQueryDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"DraftQuery"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"authUser"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"draft"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"content"}},{"kind":"Field","name":{"kind":"Name","value":"title"}}]}}]}}]}}]} as unknown as DocumentNode<DraftQueryQuery, DraftQueryQueryVariables>;
+export const DraftHistoryDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"DraftHistory"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"draftHistory"},"directives":[{"kind":"Directive","name":{"kind":"Name","value":"client"}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"content"}}]}}]}}]} as unknown as DocumentNode<DraftHistoryQuery, DraftHistoryQueryVariables>;
+export const DraftMutationDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"DraftMutation"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"draft"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UpdateDraftInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"updateDraft"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"draft"},"value":{"kind":"Variable","name":{"kind":"Name","value":"draft"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"_id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"content"}}]}}]}}]} as unknown as DocumentNode<DraftMutationMutation, DraftMutationMutationVariables>;
 export const GetMenuExtendedDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetMenuExtended"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"menuExtended"},"directives":[{"kind":"Directive","name":{"kind":"Name","value":"client"}}]}]}}]} as unknown as DocumentNode<GetMenuExtendedQuery, GetMenuExtendedQueryVariables>;
+export const AddNoteMutationDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"AddNoteMutation"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"note"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"AddNoteInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"addNote"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"note"},"value":{"kind":"Variable","name":{"kind":"Name","value":"note"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"content"}}]}}]}}]} as unknown as DocumentNode<AddNoteMutationMutation, AddNoteMutationMutationVariables>;
+export const AllNotesQueryDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"AllNotesQuery"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"authUser"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"notes"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"_id"}},{"kind":"Field","name":{"kind":"Name","value":"content"}},{"kind":"Field","name":{"kind":"Name","value":"title"}}]}}]}}]}}]} as unknown as DocumentNode<AllNotesQueryQuery, AllNotesQueryQueryVariables>;
 export const GetSearchDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetSearch"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"search"},"directives":[{"kind":"Directive","name":{"kind":"Name","value":"client"}}]}]}}]} as unknown as DocumentNode<GetSearchQuery, GetSearchQueryVariables>;
