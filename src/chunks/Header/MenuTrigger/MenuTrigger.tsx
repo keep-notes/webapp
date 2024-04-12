@@ -2,7 +2,7 @@
 
 import { MdMenu } from 'react-icons/md';
 import IconButton from '@/components/IconButton/IconButton';
-import { useToggleMenu } from '@/state/menu-extended';
+import { useToggleMenu } from '@/data/menu-extended';
 
 export default function MenuTrigger() {
   const toggleMenu = useToggleMenu();

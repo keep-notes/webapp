@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useExtendMenu, useIsMenuExtended } from '@/state/menu-extended';
+import { useExtendMenu, useIsMenuExtended } from '@/data/menu-extended';
 
 export default function useSideNav() {
   const [activeIndex] = useState(0);

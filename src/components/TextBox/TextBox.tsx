@@ -5,7 +5,13 @@ import { TextBoxProps } from './TextBox.types';
 
 const TextBox = forwardRef<HTMLInputElement, TextBoxProps>(
   (
-    { asChild = false, className, type, variant = 'bordered', ...props },
+    {
+      asChild = false,
+      className,
+      type,
+      variant = 'bordered',
+      ...props
+    }: TextBoxProps,
     ref
   ) => {
     const Comp = asChild ? Slot : 'input';

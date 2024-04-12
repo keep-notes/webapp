@@ -1,8 +1,9 @@
 import { useSnackbar } from 'notistack';
 import { useCallback, useEffect, useState } from 'react';
 import { MdOutlineDelete, MdRedo, MdUndo } from 'react-icons/md';
+import { env } from 'string-env-interpolation';
 import { InputExtras, NoteModalProps } from './NoteModal.types';
-import { useDeleteNote, useEditNote } from '@/state/notes';
+import { useDeleteNote, useEditNote } from '@/data/notes';
 import {
   ActionButton,
   FieldName,

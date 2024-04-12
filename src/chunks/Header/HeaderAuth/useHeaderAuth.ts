@@ -1,8 +1,8 @@
 import { useApolloClient } from '@apollo/client';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
-import { clearLocalItems } from '@/state/local';
-import { useAuthUser } from '@/state/auth';
+import { clearLocalItems } from '@/data/local';
+import { useAuthUser } from '@/data/auth';
 
 export default function useHeaderAuth() {
   const router = useRouter();

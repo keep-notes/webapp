@@ -3,7 +3,7 @@
 import cn from 'classnames';
 import { SideNavLinkProps } from './SideNavLink.types';
 import IconButton from '@/components/IconButton/IconButton';
-import { useIsMenuExtended } from '@/state/menu-extended';
+import { useIsMenuExtended } from '@/data/menu-extended';
 
 export default function SideNavLink(props: SideNavLinkProps) {
   const isExtended = useIsMenuExtended();

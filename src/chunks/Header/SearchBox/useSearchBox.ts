@@ -1,5 +1,5 @@
 import { ChangeEventHandler, FocusEventHandler, useRef, useState } from 'react';
-import { useGetSearch, useSetSearch } from '@/state/search';
+import { useGetSearch, useSetSearch } from '@/data/search';
 
 export default function useSearchBox() {
   const [focused, setFocused] = useState(false);

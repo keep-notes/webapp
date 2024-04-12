@@ -8,7 +8,7 @@ import { TextBoxProps } from '@/components/TextBox/TextBox.types';
 type TextAreaProps = ComponentProps<'textarea'> & TextBoxProps;
 
 const TextArea = forwardRef<HTMLTextAreaElement, TextAreaProps>(
-  (props, ref) => {
+  (props: TextAreaProps, ref) => {
     const h = useTextArea();
 
     return (

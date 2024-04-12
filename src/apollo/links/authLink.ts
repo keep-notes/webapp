@@ -1,5 +1,5 @@
 import { setContext } from '@apollo/client/link/context';
-import { getLocalItem } from '@/state/local';
+import { getLocalItem } from '@/data/local';
 
 export const authLink = setContext(async (_, { headers }) => {
   const token = await getLocalItem('authToken');

@@ -1,4 +1,4 @@
-import { StoryObj } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
 import TextBox from './TextBox';
 
 export const Primary: StoryObj<typeof TextBox> = {};
@@ -9,4 +9,4 @@ export default {
     layout: 'centered',
   },
   tags: ['autodocs'],
-};
+} satisfies Meta<typeof TextBox>;

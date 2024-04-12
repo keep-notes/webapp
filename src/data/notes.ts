@@ -1,45 +1,13 @@
-import { gql, useMutation, useQuery } from '@apollo/client';
+import { MutationResult, useMutation, useQuery } from '@apollo/client';
+import { action } from '@storybook/addon-actions';
+import { fn } from '@storybook/test';
 import { AddNoteInput, EditNoteInput, Note } from '@/__generated__/graphql';
-
-const AddNoteMutation = gql`
-  mutation AddNoteMutation($note: AddNoteInput!) {
-    addNote(note: $note) {
-      title
-      content
-    }
-  }
-`;
-
-const AllNotesQuery = gql`
-  query AllNotesQuery {
-    authUser {
-      notes {
-        _id
-        content
-        title
-      }
-    }
-  }
-`;
-
-const EditNoteMutation = gql`
-  mutation EditNoteMutation($noteId: String!, $edit: EditNoteInput!) {
-    editNote(noteId: $noteId, edit: $edit) {
-      _id
-      content
-      title
-    }
-  }
-`;
-
-const DeleteNoteMutation = gql`
-  mutation DeleteNoteMutation($noteId: String!) {
-    deleteNote(noteId: $noteId) {
-      title
-      content
-    }
-  }
-`;
+import {
+  AddNoteMutation,
+  AllNotesQuery,
+  DeleteNoteMutation,
+  EditNoteMutation,
+} from '@/data/gql/notes';
 
 const useAllNotes = () => {
   const res = useQuery(AllNotesQuery);
@@ -51,6 +19,8 @@ const useAddNote = () => {
     refetchQueries: [AllNotesQuery],
   });
 
+  if (process.env.STORYBOOK_ENV === 'true') return addNoteAction(state);
+
   return {
     state,
     async addNote(note: AddNoteInput) {
@@ -59,10 +29,22 @@ const useAddNote = () => {
   };
 };
 
+const addNoteAction = (state: MutationResult) => {
+  return {
+    state,
+    addNote: fn((...args) => {
+      action('add-note')(...args);
+      return { data: { addNote: { ...args } } };
+    }),
+  };
+};
+
 const useEditNote = () => {
   const [mutate] = useMutation(EditNoteMutation, {
     refetchQueries: [AllNotesQuery],
   });
+
+  if (process.env.STORYBOOK_ENV === 'true') return action('edit-note');
 
   return async (noteId: Note['_id'], edit: EditNoteInput) =>
     mutate({ variables: { noteId, edit } });
@@ -73,11 +55,23 @@ const useDeleteNote = () => {
     refetchQueries: [AllNotesQuery],
   });
 
+  if (process.env.STORYBOOK_ENV === 'true') return deleteNoteAction(state);
+
   return {
     state,
     async deleteNote(noteId: Note['_id']) {
       return mutate({ variables: { noteId } });
     },
+  };
+};
+
+const deleteNoteAction = (state: MutationResult) => {
+  return {
+    state,
+    deleteNote: fn((...args) => {
+      action('delete-note')(...args);
+      return { data: { deleteNote: { ...args } } };
+    }),
   };
 };
 

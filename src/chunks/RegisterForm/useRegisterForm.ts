@@ -5,8 +5,8 @@ import { useSnackbar } from 'notistack';
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import { FormData } from './RegisterForm.types';
-import { setLocalItem } from '@/state/local';
-import { useRegisterUser } from '@/state/auth';
+import { setLocalItem } from '@/data/local';
+import { useRegisterUser } from '@/data/auth';
 
 export default function useRegisterForm() {
   const router = useRouter();

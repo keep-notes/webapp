@@ -8,9 +8,9 @@ import {
   TypingEvents,
   Values,
 } from './NoteForm.types';
-import { useAuthUser } from '@/state/auth';
-import { useDraft, useUpdateDraft } from '@/state/draft';
-import { useAddNote } from '@/state/notes';
+import { useAuthUser } from '@/data/auth';
+import { useDraft, useUpdateDraft } from '@/data/draft';
+import { useAddNote } from '@/data/notes';
 
 let typingTimer: ReturnType<typeof setTimeout>;
 

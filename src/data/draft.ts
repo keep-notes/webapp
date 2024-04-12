@@ -1,26 +1,7 @@
-import { gql, useMutation, useQuery } from '@apollo/client';
+import { useMutation, useQuery } from '@apollo/client';
+import { action } from '@storybook/addon-actions';
 import { Draft, UpdateDraftInput } from '@/__generated__/graphql';
-
-const GetDraftQuery = gql`
-  query DraftQuery {
-    authUser {
-      draft {
-        content
-        title
-      }
-    }
-  }
-`;
-
-const UpdateDraftMutation = gql`
-  mutation DraftMutation($draft: UpdateDraftInput!) {
-    updateDraft(draft: $draft) {
-      _id
-      title
-      content
-    }
-  }
-`;
+import { GetDraftQuery, UpdateDraftMutation } from '@/data/gql/draft';
 
 const useDraft = () => {
   const res = useQuery(GetDraftQuery);
@@ -29,6 +10,9 @@ const useDraft = () => {
 
 const useUpdateDraft = () => {
   const [mutate] = useMutation(UpdateDraftMutation);
+
+  if (process.env.STORYBOOK_ENV === 'true') return action('update-draft');
+
   return async (draft: UpdateDraftInput) => mutate({ variables: { draft } });
 };
 

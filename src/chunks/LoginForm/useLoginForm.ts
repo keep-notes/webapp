@@ -6,8 +6,8 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import { FormData } from './LoginForm.types';
-import { useLogin } from '@/state/auth';
-import { setLocalItem } from '@/state/local';
+import { useLogin } from '@/data/auth';
+import { setLocalItem } from '@/data/local';
 
 export default function useLoginForm() {
   const { enqueueSnackbar } = useSnackbar();

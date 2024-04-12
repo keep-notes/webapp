@@ -20,7 +20,7 @@ export default function NoteModal(props: NoteModalProps) {
         <TextBox
           variant="ghost"
           placeholder="Title"
-          className="mx-2 text-lg"
+          className="mx-2 text-lg font-semibold"
           {...h.inputExtras('title')}
         />
         <div className="flex-1 overflow-y-auto p-2">
