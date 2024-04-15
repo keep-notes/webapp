@@ -6,7 +6,7 @@
     "lint": "next lint --fix && prettier . --write --ignore-path .gitignore",
     "storybook": "STORYBOOK_ENV=true storybook dev -p 6006",
     "build-storybook": "storybook build",
-    "compile": "graphql-codegen"
+    "codegen": "graphql-codegen"
   },
   "dependencies": {
     "@apollo/client": "^3.9.10",
