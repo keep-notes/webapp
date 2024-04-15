@@ -1,9 +1,15 @@
 import { useSnackbar } from 'notistack';
 import { useCallback, useEffect, useState } from 'react';
 import { MdOutlineDelete, MdRedo, MdUndo } from 'react-icons/md';
-import { env } from 'string-env-interpolation';
-import { InputExtras, NoteModalProps } from './NoteModal.types';
-import { useDeleteNote, useEditNote } from '@/data/notes';
+import { InputExtras } from './NoteModal.types';
+import {
+  useDeleteNote,
+  useEditNote,
+  useOpenedNote,
+  useOpenNote,
+  usePinNote,
+  useUnpinNote,
+} from '@/data/notes';
 import {
   ActionButton,
   FieldName,
@@ -12,16 +18,29 @@ import {
 
 let typingTimer: ReturnType<typeof setTimeout>;
 
-export default function useNoteModal(p: NoteModalProps) {
+export default function useNoteModal() {
+  const note = useOpenedNote();
+  const open = useOpenNote();
   const { enqueueSnackbar } = useSnackbar();
+  const [isPinned, setIsPinned] = useState(note?.isPinned ?? false);
   const [values, setValues] = useState<Values>({
-    title: p.note?.title ?? '',
-    content: p.note?.content ?? '',
+    title: note?.title ?? '',
+    content: note?.content ?? '',
   });
   const editNote = useEditNote();
+  const pinNote = usePinNote();
+  const unpinNote = useUnpinNote();
   const { state: deleteState, deleteNote } = useDeleteNote();
   const [history, setHistory] = useState<Values[]>([]);
   const [redoStack, setRedoStack] = useState<Values[]>([]);
+
+  useEffect(() => {
+    if (note) {
+      const { title, content, isPinned } = note;
+      setValues({ title, content });
+      setIsPinned(isPinned);
+    }
+  }, [note]);
 
   useEffect(() => {
     if (history.length) setValues(history[history.length - 1]);
@@ -38,13 +57,23 @@ export default function useNoteModal(p: NoteModalProps) {
   const saveHistory = () => setHistory([...history, values].slice(-10));
 
   async function save() {
-    await editNote(p.note!._id, { ...values });
+    note && (await editNote(note._id, { ...values }));
     saveHistory();
   }
 
   async function close() {
-    p.onClose();
+    open(null);
     await save();
+  }
+
+  async function pin() {
+    setIsPinned(true);
+    return pinNote(note!._id);
+  }
+
+  async function unpin() {
+    setIsPinned(false);
+    return unpinNote(note!._id);
   }
 
   const inputExtras = (field: FieldName) => {
@@ -87,12 +116,12 @@ export default function useNoteModal(p: NoteModalProps) {
       title: 'Delete',
       Icon: MdOutlineDelete,
       async action() {
-        const resp = await deleteNote(p.note!._id);
-        if (resp.data.deleteNote) p.onClose();
+        const resp = await deleteNote(note!._id);
+        if (resp.data.deleteNote) open(null);
       },
       disabled: false,
     },
   ];
 
-  return { actions, close, inputExtras, values };
+  return { actions, close, inputExtras, isPinned, note, pin, unpin, values };
 }

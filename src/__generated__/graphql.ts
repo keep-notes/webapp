@@ -56,7 +56,9 @@ export type Mutation = {
   deleteNote: Array<Note>;
   editNote: Note;
   login: Auth;
+  pinNote: Note;
   register: Auth;
+  unpinNote: Note;
   updateDraft: Draft;
 };
 
@@ -82,8 +84,18 @@ export type MutationLoginArgs = {
 };
 
 
+export type MutationPinNoteArgs = {
+  noteId: Scalars['String']['input'];
+};
+
+
 export type MutationRegisterArgs = {
   user: RegisterInput;
+};
+
+
+export type MutationUnpinNoteArgs = {
+  noteId: Scalars['String']['input'];
 };
 
 
@@ -96,6 +108,7 @@ export type Note = {
   _id: Scalars['ID']['output'];
   content: Scalars['String']['output'];
   createdAt: Scalars['Date']['output'];
+  isPinned: Scalars['Boolean']['output'];
   title: Scalars['String']['output'];
   updatedAt: Scalars['Date']['output'];
   user: User;
@@ -105,8 +118,8 @@ export type Note = {
 export type Query = {
   __typename?: 'Query';
   authUser?: Maybe<User>;
-  draftHistory?: Maybe<Array<Draft>>;
   menuExtended?: Maybe<Scalars['Boolean']['output']>;
+  openedNote?: Maybe<Note>;
   search?: Maybe<Scalars['String']['output']>;
 };
 
@@ -159,11 +172,6 @@ export type DraftQueryQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type DraftQueryQuery = { __typename?: 'Query', authUser?: { __typename?: 'User', draft?: { __typename?: 'Draft', content: string, title: string } | null } | null };
 
-export type DraftHistoryQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type DraftHistoryQuery = { __typename?: 'Query', draftHistory?: Array<{ __typename?: 'Draft', title: string, content: string }> | null };
-
 export type DraftMutationMutationVariables = Exact<{
   draft: UpdateDraftInput;
 }>;
@@ -171,10 +179,15 @@ export type DraftMutationMutationVariables = Exact<{
 
 export type DraftMutationMutation = { __typename?: 'Mutation', updateDraft: { __typename?: 'Draft', _id: string, title: string, content: string } };
 
-export type GetMenuExtendedQueryVariables = Exact<{ [key: string]: never; }>;
+export type UserNotesQueryQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetMenuExtendedQuery = { __typename?: 'Query', menuExtended?: boolean | null };
+export type UserNotesQueryQuery = { __typename?: 'Query', authUser?: { __typename?: 'User', notes: Array<{ __typename?: 'Note', _id: string, content: string, title: string, isPinned: boolean }> } | null };
+
+export type GetOpenedNoteQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetOpenedNoteQuery = { __typename?: 'Query', openedNote?: { __typename?: 'Note', _id: string, content: string, title: string, isPinned: boolean } | null };
 
 export type AddNoteMutationMutationVariables = Exact<{
   note: AddNoteInput;
@@ -183,10 +196,39 @@ export type AddNoteMutationMutationVariables = Exact<{
 
 export type AddNoteMutationMutation = { __typename?: 'Mutation', addNote: { __typename?: 'Note', title: string, content: string } };
 
-export type AllNotesQueryQueryVariables = Exact<{ [key: string]: never; }>;
+export type PinNoteMutationMutationVariables = Exact<{
+  noteId: Scalars['String']['input'];
+}>;
 
 
-export type AllNotesQueryQuery = { __typename?: 'Query', authUser?: { __typename?: 'User', notes: Array<{ __typename?: 'Note', _id: string, content: string, title: string }> } | null };
+export type PinNoteMutationMutation = { __typename?: 'Mutation', pinNote: { __typename?: 'Note', title: string } };
+
+export type UnpinNoteMutationMutationVariables = Exact<{
+  noteId: Scalars['String']['input'];
+}>;
+
+
+export type UnpinNoteMutationMutation = { __typename?: 'Mutation', unpinNote: { __typename?: 'Note', title: string } };
+
+export type EditNoteMutationMutationVariables = Exact<{
+  noteId: Scalars['String']['input'];
+  edit: EditNoteInput;
+}>;
+
+
+export type EditNoteMutationMutation = { __typename?: 'Mutation', editNote: { __typename?: 'Note', _id: string, content: string, title: string } };
+
+export type DeleteNoteMutationMutationVariables = Exact<{
+  noteId: Scalars['String']['input'];
+}>;
+
+
+export type DeleteNoteMutationMutation = { __typename?: 'Mutation', deleteNote: Array<{ __typename?: 'Note', title: string, content: string }> };
+
+export type GetMenuExtendedQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetMenuExtendedQuery = { __typename?: 'Query', menuExtended?: boolean | null };
 
 export type GetSearchQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -198,9 +240,13 @@ export const AuthQueryDocument = {"kind":"Document","definitions":[{"kind":"Oper
 export const RegisterMutationDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"RegisterMutation"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"user"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"RegisterInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"register"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"user"},"value":{"kind":"Variable","name":{"kind":"Name","value":"user"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"token"}}]}}]}}]} as unknown as DocumentNode<RegisterMutationMutation, RegisterMutationMutationVariables>;
 export const LoginMutationDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"LoginMutation"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"credentials"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"LoginInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"login"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"credentials"},"value":{"kind":"Variable","name":{"kind":"Name","value":"credentials"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"token"}}]}}]}}]} as unknown as DocumentNode<LoginMutationMutation, LoginMutationMutationVariables>;
 export const DraftQueryDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"DraftQuery"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"authUser"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"draft"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"content"}},{"kind":"Field","name":{"kind":"Name","value":"title"}}]}}]}}]}}]} as unknown as DocumentNode<DraftQueryQuery, DraftQueryQueryVariables>;
-export const DraftHistoryDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"DraftHistory"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"draftHistory"},"directives":[{"kind":"Directive","name":{"kind":"Name","value":"client"}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"content"}}]}}]}}]} as unknown as DocumentNode<DraftHistoryQuery, DraftHistoryQueryVariables>;
 export const DraftMutationDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"DraftMutation"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"draft"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UpdateDraftInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"updateDraft"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"draft"},"value":{"kind":"Variable","name":{"kind":"Name","value":"draft"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"_id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"content"}}]}}]}}]} as unknown as DocumentNode<DraftMutationMutation, DraftMutationMutationVariables>;
-export const GetMenuExtendedDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetMenuExtended"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"menuExtended"},"directives":[{"kind":"Directive","name":{"kind":"Name","value":"client"}}]}]}}]} as unknown as DocumentNode<GetMenuExtendedQuery, GetMenuExtendedQueryVariables>;
+export const UserNotesQueryDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"UserNotesQuery"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"authUser"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"notes"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"_id"}},{"kind":"Field","name":{"kind":"Name","value":"content"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"isPinned"}}]}}]}}]}}]} as unknown as DocumentNode<UserNotesQueryQuery, UserNotesQueryQueryVariables>;
+export const GetOpenedNoteDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetOpenedNote"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"openedNote"},"directives":[{"kind":"Directive","name":{"kind":"Name","value":"client"}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"_id"}},{"kind":"Field","name":{"kind":"Name","value":"content"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"isPinned"}}]}}]}}]} as unknown as DocumentNode<GetOpenedNoteQuery, GetOpenedNoteQueryVariables>;
 export const AddNoteMutationDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"AddNoteMutation"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"note"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"AddNoteInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"addNote"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"note"},"value":{"kind":"Variable","name":{"kind":"Name","value":"note"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"content"}}]}}]}}]} as unknown as DocumentNode<AddNoteMutationMutation, AddNoteMutationMutationVariables>;
-export const AllNotesQueryDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"AllNotesQuery"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"authUser"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"notes"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"_id"}},{"kind":"Field","name":{"kind":"Name","value":"content"}},{"kind":"Field","name":{"kind":"Name","value":"title"}}]}}]}}]}}]} as unknown as DocumentNode<AllNotesQueryQuery, AllNotesQueryQueryVariables>;
+export const PinNoteMutationDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"PinNoteMutation"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"noteId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"pinNote"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"noteId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"noteId"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"title"}}]}}]}}]} as unknown as DocumentNode<PinNoteMutationMutation, PinNoteMutationMutationVariables>;
+export const UnpinNoteMutationDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UnpinNoteMutation"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"noteId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"unpinNote"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"noteId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"noteId"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"title"}}]}}]}}]} as unknown as DocumentNode<UnpinNoteMutationMutation, UnpinNoteMutationMutationVariables>;
+export const EditNoteMutationDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"EditNoteMutation"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"noteId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"edit"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"EditNoteInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"editNote"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"noteId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"noteId"}}},{"kind":"Argument","name":{"kind":"Name","value":"edit"},"value":{"kind":"Variable","name":{"kind":"Name","value":"edit"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"_id"}},{"kind":"Field","name":{"kind":"Name","value":"content"}},{"kind":"Field","name":{"kind":"Name","value":"title"}}]}}]}}]} as unknown as DocumentNode<EditNoteMutationMutation, EditNoteMutationMutationVariables>;
+export const DeleteNoteMutationDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"DeleteNoteMutation"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"noteId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"deleteNote"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"noteId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"noteId"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"content"}}]}}]}}]} as unknown as DocumentNode<DeleteNoteMutationMutation, DeleteNoteMutationMutationVariables>;
+export const GetMenuExtendedDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetMenuExtended"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"menuExtended"},"directives":[{"kind":"Directive","name":{"kind":"Name","value":"client"}}]}]}}]} as unknown as DocumentNode<GetMenuExtendedQuery, GetMenuExtendedQueryVariables>;
 export const GetSearchDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetSearch"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"search"},"directives":[{"kind":"Directive","name":{"kind":"Name","value":"client"}}]}]}}]} as unknown as DocumentNode<GetSearchQuery, GetSearchQueryVariables>;

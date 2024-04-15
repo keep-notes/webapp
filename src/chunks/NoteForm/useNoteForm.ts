@@ -60,10 +60,13 @@ export default function useNoteForm() {
   const events: Events = {
     async blur(event) {
       const related = event.relatedTarget;
-      const contentIsEmpty = Object.values(values).every((v) => !v.length);
+      const contentIsEmpty = Object.values(values).every(
+        (v) => v.trim().length === 0
+      );
       const focusIsOutside = !related || !container.current?.contains(related);
 
       if (contentIsEmpty && focusIsOutside) {
+        setValues({ title: '', content: '' });
         setExpanded(false);
       } else if (focusIsOutside) {
         const resp = await addNote({ ...values, userId });
@@ -87,7 +90,7 @@ export default function useNoteForm() {
         typingTimer = setTimeout(saveDraft, 2000);
       },
       onKeyDown(event) {
-        if (event.key === ' ') saveHistory();
+        if ([' ', 'Enter'].includes(event.key)) saveHistory();
         clearTimeout(typingTimer);
       },
     } satisfies TypingEvents;

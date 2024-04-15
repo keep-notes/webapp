@@ -1,17 +1,40 @@
 import { MutationResult, useMutation, useQuery } from '@apollo/client';
 import { action } from '@storybook/addon-actions';
 import { fn } from '@storybook/test';
+import { cache } from '@/apollo/cache';
 import { AddNoteInput, EditNoteInput, Note } from '@/__generated__/graphql';
 import {
   AddNoteMutation,
   AllNotesQuery,
   DeleteNoteMutation,
   EditNoteMutation,
+  GetOpenedNoteQuery,
+  OpenedNoteMock,
+  PinNoteMutation,
+  UnpinNoteMutation,
 } from '@/data/gql/notes';
 
 const useAllNotes = () => {
   const res = useQuery(AllNotesQuery);
   return res.data?.authUser.notes as Note[];
+};
+
+const useOpenedNote = () => {
+  const res = useQuery(GetOpenedNoteQuery);
+  if (process.env.STORYBOOK_ENV === 'true')
+    return OpenedNoteMock.result.data.openedNote;
+  return res.data?.openedNote as Note | undefined;
+};
+
+const useOpenNote = () => {
+  if (process.env.STORYBOOK_ENV === 'true')
+    return action('open-note/close-note');
+  return (openedNote: Note | null) => {
+    cache.writeQuery({
+      query: GetOpenedNoteQuery,
+      data: { openedNote },
+    });
+  };
 };
 
 const useAddNote = () => {
@@ -37,6 +60,22 @@ const addNoteAction = (state: MutationResult) => {
       return { data: { addNote: { ...args } } };
     }),
   };
+};
+
+const usePinNote = () => {
+  const [mutate] = useMutation(PinNoteMutation, {
+    refetchQueries: [AllNotesQuery],
+  });
+  if (process.env.STORYBOOK_ENV === 'true') return action('pin-note');
+  return async (noteId: string) => mutate({ variables: { noteId } });
+};
+
+const useUnpinNote = () => {
+  const [mutate] = useMutation(UnpinNoteMutation, {
+    refetchQueries: [AllNotesQuery],
+  });
+  if (process.env.STORYBOOK_ENV === 'true') return action('unpin-note');
+  return async (noteId: string) => mutate({ variables: { noteId } });
 };
 
 const useEditNote = () => {
@@ -75,4 +114,13 @@ const deleteNoteAction = (state: MutationResult) => {
   };
 };
 
-export { useAddNote, useAllNotes, useEditNote, useDeleteNote };
+export {
+  useAddNote,
+  useAllNotes,
+  useEditNote,
+  useDeleteNote,
+  useOpenNote,
+  useOpenedNote,
+  usePinNote,
+  useUnpinNote,
+};

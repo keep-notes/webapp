@@ -1,21 +1,24 @@
 directive @client on FIELD
 
+scalar Date
+
 type Query {
     authUser: User
     menuExtended: Boolean
     search: String
+    openedNote: Note
 }
 
 type Mutation {
     register(user: RegisterInput!): Auth!
     login(credentials: LoginInput!): Auth!
     addNote(note: AddNoteInput!): Note!
+    pinNote(noteId: String!): Note!
+    unpinNote(noteId: String!): Note!
     editNote(noteId: String!, edit: EditNoteInput!): Note!
     deleteNote(noteId: String!): [Note!]!
     updateDraft(draft: UpdateDraftInput!): Draft!
 }
-
-scalar Date
 
 type User {
     _id: ID!
@@ -38,6 +41,7 @@ type Note {
     _id: ID!
     title: String!
     content: String!
+    isPinned: Boolean!
     userId: String!
     user: User!
     createdAt: Date!

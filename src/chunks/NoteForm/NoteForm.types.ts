@@ -12,7 +12,7 @@ export type Values = Record<FieldName, string>;
 export interface Events {
   blur: FocusEventHandler<HTMLDivElement>;
   close: MouseEventHandler<HTMLButtonElement>;
-  focus: FocusEventHandler<HTMLDivElement>;
+  focus: MouseEventHandler<HTMLDivElement>;
 }
 
 type InputBox = HTMLTextAreaElement | HTMLInputElement;

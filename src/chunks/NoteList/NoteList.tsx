@@ -1,7 +1,9 @@
 'use client';
 
 import useNoteList from './useNoteList';
-import Card from '@/components/Card/Card';
+import NoteListSectionHeading from '@/chunks/NoteList/NoteListSectionHeading/NoteListSectionHeading';
+import { Note } from '@/__generated__/graphql';
+import NoteListSection from '@/chunks/NoteList/NoteListSection/NoteListSection';
 import NoteModal from '@/fragments/NoteModal/NoteModal';
 
 export default function NoteList() {
@@ -9,25 +11,25 @@ export default function NoteList() {
 
   if (!h.notes) return;
 
+  const [pinned, unpinned] = h.notes.reduce(
+    ([pinned, unpinned], note) => {
+      note.isPinned ? pinned.push(note) : unpinned.push(note);
+      return [pinned, unpinned];
+    },
+    [Array<Note>(), Array<Note>()]
+  );
+
   return (
     <>
-      <div className="gap-4 space-y-4 md:columns-3 lg:columns-6">
-        {h.notes.map((note) => (
-          <Card
-            key={note._id}
-            className="flex break-inside-avoid flex-col !p-4"
-            onClick={() => h.open(note)}
-          >
-            <h2 className="text-xl font-semibold">{note.title}</h2>
-            <p>{note.content}</p>
-          </Card>
-        ))}
-      </div>
-      <NoteModal
-        key={h.openedNote?._id ?? 'key'}
-        note={h.openedNote}
-        onClose={() => h.close()}
-      />
+      {pinned.length > 0 && (
+        <>
+          <NoteListSectionHeading>Pinned</NoteListSectionHeading>
+          <NoteListSection notes={pinned} />
+          <NoteListSectionHeading>Others</NoteListSectionHeading>
+        </>
+      )}
+      <NoteListSection notes={unpinned} />
+      <NoteModal />
     </>
   );
 }

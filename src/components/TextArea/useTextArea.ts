@@ -7,12 +7,8 @@ export default function useTextArea() {
     const elem = document.getElementById(id)! as HTMLTextAreaElement;
 
     const handleInput = () => {
-      if (elem.value.length) {
-        elem.style.height = 'auto';
-        elem.style.height = `${elem.scrollHeight}px`;
-      } else {
-        elem.style.height = '20px';
-      }
+      elem.style.height = 'auto';
+      elem.style.height = `${elem.scrollHeight}px`;
     };
 
     handleInput();

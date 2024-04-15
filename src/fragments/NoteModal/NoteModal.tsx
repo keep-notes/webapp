@@ -1,14 +1,15 @@
-import { NoteModalProps } from './NoteModal.types';
+import { MdOutlinePushPin, MdPushPin } from 'react-icons/md';
+import useNoteModal from './useNoteModal';
 import Card from '@/components/Card/Card';
-import useNoteModal from '@/fragments/NoteModal/useNoteModal';
 import Button from '@/components/Button/Button';
 import IconButton from '@/components/IconButton/IconButton';
 import TextArea from '@/components/TextArea/TextArea';
 import TextBox from '@/components/TextBox/TextBox';
 
-export default function NoteModal(props: NoteModalProps) {
-  const h = useNoteModal(props);
-  if (!props.note) return;
+export default function NoteModal() {
+  const h = useNoteModal();
+
+  if (!h.note) return;
 
   return (
     <div className="fixed left-0 top-0 z-20 grid h-screen w-screen place-items-center">
@@ -16,13 +17,28 @@ export default function NoteModal(props: NoteModalProps) {
         className="absolute h-full w-full bg-[#00000088]"
         onClick={h.close}
       />
-      <Card className="z-30 flex max-h-[80vh] w-full flex-col gap-4 bg-dark py-1 shadow-xl md:w-[40em]">
-        <TextBox
-          variant="ghost"
-          placeholder="Title"
-          className="mx-2 text-lg font-semibold"
-          {...h.inputExtras('title')}
-        />
+      <Card className="z-30 flex max-h-[80vh] w-full flex-col gap-4 bg-dark pb-1 pt-4 shadow-xl md:w-[40em]">
+        <div className="flex">
+          <TextBox
+            variant="ghost"
+            placeholder="Title"
+            className="mx-2 text-lg font-semibold"
+            {...h.inputExtras('title')}
+          />
+          {h.isPinned ? (
+            <IconButton
+              title="Unpin note"
+              className="bg-light"
+              onClick={h.unpin}
+            >
+              <MdPushPin size={20} />
+            </IconButton>
+          ) : (
+            <IconButton title="Pin note" onClick={h.pin}>
+              <MdOutlinePushPin size={20} />
+            </IconButton>
+          )}
+        </div>
         <div className="flex-1 overflow-y-auto p-2">
           <TextArea
             variant="ghost"

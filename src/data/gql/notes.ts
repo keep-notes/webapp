@@ -1,12 +1,14 @@
 import { gql } from '@apollo/client';
 import { faker } from '@faker-js/faker';
+import { Note } from '@/__generated__/graphql';
 import { fakeUser } from '@/data/gql/auth';
 
-const fakeNote = () => {
+const fakeNote = (): Note => {
   return {
     _id: faker.string.uuid(),
     title: faker.lorem.word(),
     content: faker.lorem.text(),
+    isPinned: faker.datatype.boolean(0.3),
     userId: fakeUser._id,
     user: fakeUser,
     createdAt: faker.date.past(),
@@ -15,16 +17,35 @@ const fakeNote = () => {
 };
 
 const AllNotesQuery = gql`
-  query AllNotesQuery {
+  query UserNotesQuery {
     authUser {
       notes {
         _id
         content
         title
+        isPinned
       }
     }
   }
 `;
+
+const GetOpenedNoteQuery = gql`
+  query GetOpenedNote {
+    openedNote @client {
+      _id
+      content
+      title
+      isPinned
+    }
+  }
+`;
+
+const OpenedNoteMock = {
+  request: { query: GetOpenedNoteQuery },
+  result: {
+    data: { openedNote: fakeNote() },
+  },
+};
 
 const AllNotesMock = {
   request: { query: AllNotesQuery },
@@ -40,6 +61,22 @@ const AddNoteMutation = gql`
     addNote(note: $note) {
       title
       content
+    }
+  }
+`;
+
+const PinNoteMutation = gql`
+  mutation PinNoteMutation($noteId: String!) {
+    pinNote(noteId: $noteId) {
+      title
+    }
+  }
+`;
+
+const UnpinNoteMutation = gql`
+  mutation UnpinNoteMutation($noteId: String!) {
+    unpinNote(noteId: $noteId) {
+      title
     }
   }
 `;
@@ -69,4 +106,8 @@ export {
   AddNoteMutation,
   EditNoteMutation,
   DeleteNoteMutation,
+  OpenedNoteMock,
+  GetOpenedNoteQuery,
+  PinNoteMutation,
+  UnpinNoteMutation,
 };
