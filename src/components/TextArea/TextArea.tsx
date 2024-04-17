@@ -5,11 +5,11 @@ import useTextArea from './useTextArea';
 import TextBox from '@/components/TextBox/TextBox';
 import { TextBoxProps } from '@/components/TextBox/TextBox.types';
 
-type TextAreaProps = ComponentProps<'textarea'> & TextBoxProps;
+export type TextAreaProps = ComponentProps<'textarea'> & TextBoxProps;
 
 const TextArea = forwardRef<HTMLTextAreaElement, TextAreaProps>(
   (props: TextAreaProps, ref) => {
-    const h = useTextArea();
+    const h = useTextArea(props);
 
     return (
       <TextBox asChild {...props}>

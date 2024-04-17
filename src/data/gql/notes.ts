@@ -9,12 +9,16 @@ const fakeNote = (): Note => {
     title: faker.lorem.word(),
     content: faker.lorem.text(),
     isPinned: faker.datatype.boolean(0.3),
+    isArchived: faker.datatype.boolean(0.1),
+    isTrashed: faker.datatype.boolean(0.1),
     userId: fakeUser._id,
     user: fakeUser,
     createdAt: faker.date.past(),
     updatedAt: faker.date.past(),
   };
 };
+
+const fakeNotesArray = Array(faker.number.int(15)).fill(0).map(fakeNote);
 
 const AllNotesQuery = gql`
   query UserNotesQuery {
@@ -24,6 +28,24 @@ const AllNotesQuery = gql`
         content
         title
         isPinned
+        isArchived
+        isTrashed
+      }
+      trashed {
+        _id
+        content
+        title
+        isPinned
+        isArchived
+        isTrashed
+      }
+      archived {
+        _id
+        content
+        title
+        isPinned
+        isArchived
+        isTrashed
       }
     }
   }
@@ -65,22 +87,6 @@ const AddNoteMutation = gql`
   }
 `;
 
-const PinNoteMutation = gql`
-  mutation PinNoteMutation($noteId: String!) {
-    pinNote(noteId: $noteId) {
-      title
-    }
-  }
-`;
-
-const UnpinNoteMutation = gql`
-  mutation UnpinNoteMutation($noteId: String!) {
-    unpinNote(noteId: $noteId) {
-      title
-    }
-  }
-`;
-
 const EditNoteMutation = gql`
   mutation EditNoteMutation($noteId: String!, $edit: EditNoteInput!) {
     editNote(noteId: $noteId, edit: $edit) {
@@ -108,6 +114,5 @@ export {
   DeleteNoteMutation,
   OpenedNoteMock,
   GetOpenedNoteQuery,
-  PinNoteMutation,
-  UnpinNoteMutation,
+  fakeNotesArray,
 };

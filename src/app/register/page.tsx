@@ -1,4 +1,4 @@
-import RegisterForm from '@/chunks/RegisterForm/RegisterForm';
+import RegisterForm from '@/chunks/register/RegisterForm/RegisterForm';
 
 export default function RegisterPage() {
   return (

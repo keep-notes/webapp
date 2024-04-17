@@ -13,10 +13,9 @@ type Mutation {
     register(user: RegisterInput!): Auth!
     login(credentials: LoginInput!): Auth!
     addNote(note: AddNoteInput!): Note!
-    pinNote(noteId: String!): Note!
-    unpinNote(noteId: String!): Note!
     editNote(noteId: String!, edit: EditNoteInput!): Note!
-    deleteNote(noteId: String!): [Note!]!
+    deleteNote(noteId: String!): Note!
+    restoreNote(noteId: String!): Note!
     updateDraft(draft: UpdateDraftInput!): Draft!
 }
 
@@ -29,6 +28,8 @@ type User {
     createdAt: Date!
     updatedAt: Date!
     notes: [Note!]!
+    archived: [Note!]!
+    trashed: [Note!]!
     draft: Draft
 }
 
@@ -42,6 +43,8 @@ type Note {
     title: String!
     content: String!
     isPinned: Boolean!
+    isArchived: Boolean!
+    isTrashed: Boolean!
     userId: String!
     user: User!
     createdAt: Date!
@@ -78,6 +81,8 @@ input AddNoteInput {
 input EditNoteInput {
     title: String
     content: String
+    isPinned: Boolean
+    isArchived: Boolean
 }
 
 input UpdateDraftInput {

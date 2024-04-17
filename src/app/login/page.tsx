@@ -1,4 +1,4 @@
-import LoginForm from '@/chunks/LoginForm/LoginForm';
+import LoginForm from '@/chunks/login/LoginForm/LoginForm';
 
 export default function LoginPage() {
   return (

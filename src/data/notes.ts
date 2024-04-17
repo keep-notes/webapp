@@ -1,8 +1,8 @@
 import { MutationResult, useMutation, useQuery } from '@apollo/client';
 import { action } from '@storybook/addon-actions';
 import { fn } from '@storybook/test';
-import { cache } from '@/apollo/cache';
 import { AddNoteInput, EditNoteInput, Note } from '@/__generated__/graphql';
+import { cache } from '@/apollo/cache';
 import {
   AddNoteMutation,
   AllNotesQuery,
@@ -10,13 +10,21 @@ import {
   EditNoteMutation,
   GetOpenedNoteQuery,
   OpenedNoteMock,
-  PinNoteMutation,
-  UnpinNoteMutation,
 } from '@/data/gql/notes';
 
-const useAllNotes = () => {
+const useActiveNotes = () => {
   const res = useQuery(AllNotesQuery);
   return res.data?.authUser.notes as Note[];
+};
+
+const useTrashedNotes = () => {
+  const res = useQuery(AllNotesQuery);
+  return res.data?.authUser.trashed as Note[];
+};
+
+const useArchivedNotes = () => {
+  const res = useQuery(AllNotesQuery);
+  return res.data?.authUser.archived as Note[];
 };
 
 const useOpenedNote = () => {
@@ -62,22 +70,6 @@ const addNoteAction = (state: MutationResult) => {
   };
 };
 
-const usePinNote = () => {
-  const [mutate] = useMutation(PinNoteMutation, {
-    refetchQueries: [AllNotesQuery],
-  });
-  if (process.env.STORYBOOK_ENV === 'true') return action('pin-note');
-  return async (noteId: string) => mutate({ variables: { noteId } });
-};
-
-const useUnpinNote = () => {
-  const [mutate] = useMutation(UnpinNoteMutation, {
-    refetchQueries: [AllNotesQuery],
-  });
-  if (process.env.STORYBOOK_ENV === 'true') return action('unpin-note');
-  return async (noteId: string) => mutate({ variables: { noteId } });
-};
-
 const useEditNote = () => {
   const [mutate] = useMutation(EditNoteMutation, {
     refetchQueries: [AllNotesQuery],
@@ -116,11 +108,11 @@ const deleteNoteAction = (state: MutationResult) => {
 
 export {
   useAddNote,
-  useAllNotes,
+  useActiveNotes,
+  useArchivedNotes,
   useEditNote,
   useDeleteNote,
   useOpenNote,
   useOpenedNote,
-  usePinNote,
-  useUnpinNote,
+  useTrashedNotes,
 };

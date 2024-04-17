@@ -1,6 +1,7 @@
 import { useEffect, useId } from 'react';
+import { TextAreaProps } from './TextArea';
 
-export default function useTextArea() {
+export default function useTextArea(props: TextAreaProps) {
   const id = useId() + 'textarea';
 
   useEffect(() => {
@@ -17,7 +18,7 @@ export default function useTextArea() {
     return () => {
       elem.removeEventListener('input', handleInput);
     };
-  }, [id]);
+  }, [id, props.value]);
 
   return { id };
 }
