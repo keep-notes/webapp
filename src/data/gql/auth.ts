@@ -11,6 +11,8 @@ const fakeUser: User = {
   createdAt: faker.date.past(),
   updatedAt: faker.date.past(),
   notes: [],
+  archived: [],
+  trashed: [],
 };
 
 const GetAuthQuery = gql`
