@@ -1,5 +1,5 @@
 import { ChangeEventHandler, FocusEventHandler, useRef, useState } from 'react';
-import { useGetSearch, useSetSearch } from '@/data/search';
+import { useGetQuery, useSetQuery } from '@/data/search';
 
 export default function useSearchBox() {
   const [focused, setFocused] = useState(false);
@@ -7,8 +7,8 @@ export default function useSearchBox() {
     container: useRef<HTMLDivElement>(null),
     input: useRef<HTMLInputElement>(null),
   };
-  const value = useGetSearch();
-  const setValue = useSetSearch();
+  const value = useGetQuery();
+  const setValue = useSetQuery();
 
   const blur = () => setFocused(false);
 

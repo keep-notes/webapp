@@ -1,6 +1,7 @@
 import { MutationResult, useMutation, useQuery } from '@apollo/client';
 import { action } from '@storybook/addon-actions';
 import { fn } from '@storybook/test';
+import { useGetQuery } from '@/data/search';
 import { AddNoteInput, EditNoteInput, Note } from '@/__generated__/graphql';
 import { cache } from '@/apollo/cache';
 import {
@@ -13,7 +14,8 @@ import {
 } from '@/data/gql/notes';
 
 const useActiveNotes = () => {
-  const res = useQuery(AllNotesQuery);
+  const query = useGetQuery();
+  const res = useQuery(AllNotesQuery, { variables: { query } });
   return res.data?.authUser.notes as Note[];
 };
 

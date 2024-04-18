@@ -1,23 +1,18 @@
-import { gql, useQuery } from '@apollo/client';
+import { useQuery } from '@apollo/client';
 import { cache } from '@/apollo/cache';
+import { GetSearchQuery } from '@/data/gql/search';
 
-const GetSearchQuery = gql`
-  query GetSearch {
-    search @client
-  }
-`;
-
-function useGetSearch() {
+function useGetQuery() {
   const res = useQuery(GetSearchQuery);
-  return res.data?.search ?? '';
+  return res.data?.query ?? '';
 }
 
-function useSetSearch() {
-  return (search: string) =>
+function useSetQuery() {
+  return (query: string) =>
     cache.writeQuery({
       query: GetSearchQuery,
-      data: { search },
+      data: { query },
     });
 }
 
-export { useGetSearch, useSetSearch };
+export { useGetQuery, useSetQuery };

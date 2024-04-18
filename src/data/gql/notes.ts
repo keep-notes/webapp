@@ -21,9 +21,9 @@ const fakeNote = (): Note => {
 const fakeNotesArray = Array(faker.number.int(15)).fill(0).map(fakeNote);
 
 const AllNotesQuery = gql`
-  query UserNotesQuery {
+  query UserNotesQuery($query: String) {
     authUser {
-      notes {
+      notes(query: $query) {
         _id
         content
         title

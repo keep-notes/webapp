@@ -4,8 +4,10 @@ scalar Date
 
 type Query {
     authUser: User
+
+    # Client queries
     menuExtended: Boolean
-    search: String
+    query: String
     openedNote: Note
 }
 
@@ -27,7 +29,7 @@ type User {
     lastLogin: Date
     createdAt: Date!
     updatedAt: Date!
-    notes: [Note!]!
+    notes(query: String): [Note!]!
     archived: [Note!]!
     trashed: [Note!]!
     draft: Draft

@@ -24,7 +24,7 @@ const documents = {
     "\n  mutation EditNoteMutation($noteId: String!, $edit: EditNoteInput!) {\n    editNote(noteId: $noteId, edit: $edit) {\n      _id\n      content\n      title\n    }\n  }\n": types.EditNoteMutationDocument,
     "\n  mutation DeleteNoteMutation($noteId: String!) {\n    deleteNote(noteId: $noteId) {\n      title\n      content\n    }\n  }\n": types.DeleteNoteMutationDocument,
     "\n  query GetMenuExtended {\n    menuExtended @client\n  }\n": types.GetMenuExtendedDocument,
-    "\n  query GetSearch {\n    search @client\n  }\n": types.GetSearchDocument,
+    "\n  query GetSearch {\n    query @client\n  }\n": types.GetSearchDocument,
 };
 
 /**
@@ -88,7 +88,7 @@ export function gql(source: "\n  query GetMenuExtended {\n    menuExtended @clie
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function gql(source: "\n  query GetSearch {\n    search @client\n  }\n"): (typeof documents)["\n  query GetSearch {\n    search @client\n  }\n"];
+export function gql(source: "\n  query GetSearch {\n    query @client\n  }\n"): (typeof documents)["\n  query GetSearch {\n    query @client\n  }\n"];
 
 export function gql(source: string) {
   return (documents as any)[source] ?? {};
