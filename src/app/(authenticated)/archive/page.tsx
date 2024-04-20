@@ -1,4 +1,4 @@
-import ArchivedNotes from '@/chunks/(authenticated)/(archive)/ArchivedNotes/ArchivedNotes';
+import ArchivedNotes from '@/chunks/(authenticated)/(archive)/ArchivedNotes';
 
 export default function Archived() {
   return (

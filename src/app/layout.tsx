@@ -2,7 +2,7 @@ import './globals.css';
 import type { Metadata } from 'next';
 import { Nunito_Sans } from 'next/font/google';
 import { PropsWithChildren } from 'react';
-import RootProvider from '@/providers/RootProvider';
+import RootProvider from '@/providers';
 
 const font = Nunito_Sans({ subsets: ['latin'] });
 

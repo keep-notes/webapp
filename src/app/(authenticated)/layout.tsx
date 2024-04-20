@@ -1,6 +1,6 @@
 import { PropsWithChildren } from 'react';
-import Header from '@/chunks/(authenticated)/Header/Header';
-import SideNav from '@/chunks/(authenticated)/SideNav/SideNav';
+import Header from '@/chunks/(authenticated)/Header';
+import SideNav from '@/chunks/(authenticated)/SideNav';
 
 export default function AuthenticatedLayout(props: PropsWithChildren) {
   return (

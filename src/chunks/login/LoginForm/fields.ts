@@ -1,4 +1,4 @@
-import { FormField } from './LoginForm.types';
+import { FormField } from './types';
 
 const fields: FormField[] = [
   {

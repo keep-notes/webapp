@@ -2,16 +2,20 @@ import * as idb from 'idb-keyval';
 
 interface LocalKeys {
   authToken: string;
+  draft: {
+    title: string;
+    content: string;
+  };
 }
 
 type Key = keyof LocalKeys;
-type Val<T extends Key> = LocalKeys[T] | undefined;
+type Val<T extends Key> = Partial<LocalKeys>[T];
 
-async function getLocalItem(key: Key): Promise<Val<typeof key>> {
+async function getLocalItem<T extends Key>(key: T): Promise<Val<T>> {
   return idb.get(key);
 }
 
-async function setLocalItem(key: Key, val: Val<typeof key>) {
+async function setLocalItem<T extends Key>(key: T, val: Val<T>) {
   return idb.set(key, val);
 }
 
