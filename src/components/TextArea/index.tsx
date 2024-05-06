@@ -7,7 +7,7 @@ import { TextBoxProps } from '@/components/TextBox/types';
 
 export type TextAreaProps = ComponentProps<'textarea'> & TextBoxProps;
 
-const Index = forwardRef<HTMLTextAreaElement, TextAreaProps>(
+const TextArea = forwardRef<HTMLTextAreaElement, TextAreaProps>(
   (props: TextAreaProps, ref) => {
     const h = useTextArea(props);
 
@@ -19,6 +19,6 @@ const Index = forwardRef<HTMLTextAreaElement, TextAreaProps>(
   }
 );
 
-Index.displayName = 'TextArea';
+TextArea.displayName = 'TextArea';
 
-export default Index;
+export default TextArea;

@@ -1,10 +1,10 @@
-import { useEffect, useId } from 'react';
+import { useId, useLayoutEffect } from 'react';
 import { TextAreaProps } from './index';
 
 export default function useTextArea(props: TextAreaProps) {
   const id = useId() + 'textarea';
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const elem = document.getElementById(id)! as HTMLTextAreaElement;
 
     const handleInput = () => {

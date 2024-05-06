@@ -1,14 +1,14 @@
 import { StoryObj } from '@storybook/react';
-import Index from './index';
+import TextArea from './index';
 
-export const Primary: StoryObj<typeof Index> = {
+export const Primary: StoryObj<typeof TextArea> = {
   args: {
     variant: 'bordered',
   },
 };
 
 export default {
-  component: Index,
+  component: TextArea,
   parameters: {
     layout: 'centered',
   },

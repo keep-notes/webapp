@@ -1,9 +1,9 @@
-import Index from '@/chunks/(authenticated)/(trash)/TrashedNotes';
+import TrashedNotes from '@/chunks/(authenticated)/(trash)/TrashedNotes';
 
 export default function Trash() {
   return (
     <main>
-      <Index />
+      <TrashedNotes />
     </main>
   );
 }
